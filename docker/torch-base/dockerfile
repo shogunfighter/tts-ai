@@ -1,0 +1,29 @@
+# torch-base/Dockerfile
+FROM python:3.10-slim as builder
+
+# Stage 1: Build with all dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libsndfile1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install core packages with precise versions
+RUN pip install --no-cache-dir \
+    torch==2.1.0 \
+    torchaudio==2.1.0 \
+    TTS==0.21.1 \
+    -f https://download.pytorch.org/whl/torch_stable.html
+
+# Pre-download models (optional)
+RUN python -c "from TTS.api import TTS; TTS(model_name='tts_models/en/ljspeech/glow-tts')"
+
+# ----------------------------
+# Final lean image
+FROM python:3.10-slim
+
+# Copy only runtime essentials from builder
+COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
+COPY --from=builder /root/.local/share/tts /root/.local/share/tts
+
+# Verify install
+CMD ["python", "-c", "import torch, TTS; print(f'Torch {torch.__version__}, TTS {TTS.__version__}')"]

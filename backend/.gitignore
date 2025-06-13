@@ -1,0 +1,54 @@
+# Byte-compiled / cached files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# IDE/Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+.env.local
+
+# Local development files
+*.local
+*.bak
+
+# Dependency directories
+**/__pycache__/
+**/*.egg-info/
+*.egg
+
+# Build/Output directories
+build/
+dist/
+*.so
+*.out
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache
+.cache/
+
+# Temporary files
+*.tmp
+*~
+~$*
+
+# Docker
+docker-compose.override.yml

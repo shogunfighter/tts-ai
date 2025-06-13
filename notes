@@ -1,0 +1,10 @@
+BUILD PROCESS
+
+# 1. Build base image (only needed once)
+docker build -t my-torch-base -f docker/torch-base/Dockerfile .
+
+# 2. Build application (fast rebuilds)
+docker-compose build
+
+# 3. Run
+docker-compose up

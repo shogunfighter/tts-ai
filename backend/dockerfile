@@ -1,0 +1,17 @@
+# backend/Dockerfile
+FROM my-torch-base
+
+WORKDIR /app
+
+# Install only additional requirements
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy app code
+COPY app/ .
+
+# Model cache volume
+VOLUME /root/.local/share/tts
+
+EXPOSE 8000
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
